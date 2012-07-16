@@ -58,14 +58,12 @@ public class ERHighchartsDemoComponent extends ERXComponent {
     public WOComponent addEntryAction(){
     	dataCollection.addData(new DateTime(), new BigDecimal(byoValue.toString()));
     	byoValue=null;
-    	log.debug("demo data collection added values to make.["+dataCollection+"]");
     	return null;
     }
     
     public List<DemoDataCollection> byoSeries(){
     	List<DemoDataCollection> list = new ArrayList<DemoDataCollection>();
     	list.add(dataCollection);
-    	log.debug("returning single item List of a demo data collection ["+dataCollection+"]");
     	return list;
     }
      
