@@ -1,0 +1,27 @@
+<wo:LAF>
+<div class="note">
+	<h3> Area Chart </h3>
+	Area Chart generated from the Model (er.highcharts.demo.model) Company Departments.
+	<div>
+		Area charts use values in the <pre>series.data</pre> , so this chart maps the <pre>data</pre> option in the series
+		to the <pre>monthlyResults</pre> key path.
+	</div>
+</div>
+	<wo:ERAreaChart graph="$graph" series="$company.departments" mappings="$mappings" />
+	
+<hr />
+<div class="note">
+	<div>
+		<h3>Alternative bindings</h3>
+		Alternatively, you can specify the <pre>seriesNameKeyPath</pre> and <pre>seriesDataKeyPath</pre> bindings.
+	</div>
+	<div>
+		Different approach, same result. See Line Chart Page for details.
+	</div>
+	
+</div>
+	<wo:ERAreaChart graph="$graph" series="$company.departments" 
+	seriesNameKeyPath="name" seriesDataKeyPath="monthlyResults" />
+
+
+</wo:LAF>

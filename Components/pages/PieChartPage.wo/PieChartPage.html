@@ -1,0 +1,82 @@
+<wo:LAF>
+
+<div class="note">
+	<h3> Pie Chart </h3>
+	Pie Chart generated from the Model (er.highcharts.demo.model) Company Departments.
+	<div>
+		<pre>$company.departments</pre> is bound to <pre>series</pre>, so ERPieChart will try to use those Department objects to build its wedges.
+	</div>
+	<div>
+		It maps the <pre>y</pre> option in the series data (used by the pie chart) to the <pre>fleet.count</pre> key path.
+	</div>
+	<div>
+		Also, the style binding in the Chart has been overridden to set the height of the render container to 200 pixels, as an example.
+	</div>
+	<div>
+		Click on each wedge for separation.
+	</div>
+	<div>
+		Use the icons on the right to Print and Export.
+	</div>
+</div>
+
+<script>
+function <wo:str value="$pieChartTooltipFunctionName" />(){
+	return this.point.name+" has <b>"+this.y+"</b> Fleet Vehicles";
+}
+</script>
+	<wo:ERPieChart graph="$graph" series="$company.departments" mappings="$mappings" style="height:200px;"/>
+
+<hr />
+
+<div class="note">
+	<div>
+		<h3>Alternative bindings</h3>
+		Alternatively, you can specify the <pre>seriesNameKeyPath</pre> and <pre>seriesValueKeyPath</pre> bindings.
+	</div>
+	<div>
+		Here the value "name" is bound to the <pre>seriesNameKeyPath</pre> binding, so each wedge will be defined by each name value of each department.
+	</div>
+	<div>
+		Likewise the value "fleet.count" is bound to the <pre>seriesValueKeyPath</pre> binding, so each wedge will have that number as its value.
+	</div>
+	<div>
+		Different approach, same result.
+	</div>
+	
+</div>
+	<wo:ERPieChart graph="$graph" series="$company.departments" seriesNameKeyPath="name" seriesValueKeyPath="fleet.count" style="height:200px;"/>
+
+<hr />
+
+<div class="note">
+	<h3>Build your own pie</h3>
+	Build your own pie by entering the details in the form and hitting build. The left field is the wedge name, the right field is the wedge value as a number.
+</div>
+<wo:form multipleSubmit = "$true">
+	<wo:AjaxUpdateContainer id="byoLeftContainer">
+		<div class="byoLeft">
+			<wo:loop list="$byoChartWedges" item = "$wedgeIter">
+				<div>
+					<label><wo:str value="$wedgeIter.name" /></label> - <wo:str value="$wedgeIter.y" /><wo:AjaxSubmitButton action="$removeEntryAction" updateContainerID="byoLeftContainer" value="remove"/>
+				</div>
+			</wo:loop>
+			<div>
+				<wo:textfield value="$byoName" /> - <wo:textfield numberformat = "######.##" value = "$byoValue" /><wo:AjaxSubmitButton action="$addEntryAction" updateContainerID="byoLeftContainer" value="add"/>
+			</div>
+			
+			<div>
+				<wo:submit action="$buildChartAction" value="build"/>
+			</div>
+			
+			
+		</div>
+	</wo:AjaxUpdateContainer>
+	<wo:AjaxUpdateContainer id="byoRightContainer">
+		<div class="byoRight">
+			<wo:ERPieChart graph="$byoGraph" series="$byoChartWedges" style="height:200px;"/>
+		</div>
+	</wo:AjaxUpdateContainer>
+</wo:form>
+
+</wo:LAF>

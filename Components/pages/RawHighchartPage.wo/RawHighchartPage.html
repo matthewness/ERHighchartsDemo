@@ -1,0 +1,149 @@
+<wo:LAF>
+<div class="note">
+	<h3> No ERHighchart components used.</h3>
+	This chart is generated without using any of the frmaework components. The base <pre>ERHighchart</pre> Component is not used.
+	<div>
+		There is no graph to define - the JSON and JavaSctip values are injected straight into the Highcharts.Chart object.
+		Here we build a slightly more complex set of objects to create a donut graph.
+		Notes:
+		<ul>
+			<li>The inner and outer series are defined in javascript.</li>
+			<li>"Inner" and "Outer" may seem the opposite of what you think :)</li>
+			<li>The sub series colours are lightened versions of the series wedge colours.</li>
+			<li>JPEG export is removed from the exporting options.</li>
+		</ul>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+  document.observe("dom:loaded", function () {
+  
+ 	var colors = Highcharts.getOptions().colors;
+	
+	// Build the data arrays
+	var outerSeriesData = [];
+	var innerSeriesData = [];
+	var brightness = 0.1;
+	
+   	<wo:loop list="$diagArray" item="$diagIter" index="$diagIndex">
+         		outerSeriesData.push(
+         			{
+         				name: '<wo:str value="$diagIter.name" />',
+         				y: <wo:str value="$diagIter.total" />,
+         				color: colors[<wo:str value="$diagIter.refIndex" />]
+         			}
+         		);
+         		
+         		<wo:loop list="$innerSeries" item="$innerSeriesIter" index="$innerSeriesIndex">
+		         	   	brightness += 0.1;
+				 		innerSeriesData.push(
+		         			{
+		         				name: '<wo:str value="$innerSeriesIter" />',
+		         				y: <wo:str value="$innerSeriesIterAmount" />,
+		         				color: Highcharts.Color(colors[<wo:str value="$diagIter.refIndex" />]).brighten(brightness).get()
+		         			}
+		         		);
+		         	
+			   	</wo:loop>	
+		brightness = 0.1;
+	</wo:loop>	
+
+
+
+	// Create the chart
+	var chart = new Highcharts.Chart({
+		chart: {
+			renderTo: '<wo:str value="$chartContainerID" />',
+			type: 'pie'
+		},
+		title: {
+	         text: '<wo:str value="$title" />'
+		},
+		yAxis: {
+			title: {
+				text: ''
+			}
+		},
+		plotOptions: {
+			pie: {
+				shadow: false
+			}
+		},
+		tooltip: {
+			formatter: function() {
+				return '<b>'+ this.point.name +'</b>: '+ this.y +'';
+			}
+		},
+		series: [{
+			name: 'Outer',
+			data: outerSeriesData,
+			size: '65%',
+			dataLabels: {
+				formatter: function() {
+					return this.y > 0 ? this.point.name : null;
+				},
+				color: 'white',
+				distance: -40
+			}
+		}, {
+			name: 'Inner',
+			data: innerSeriesData,
+			innerSize: '65%',
+			dataLabels: {
+				formatter: function() {
+					// display only if larger than 1
+					return this.y > 0 ? '<b>'+ this.point.name +':</b> '+ this.y  : null;
+				}
+			}
+		}]  
+		,
+          	credits: {
+        	enabled: false
+    	},
+    	exporting: {
+        	url: '<wo:str value="$exportURL" />',
+        	filename: '<wo:str value="$exportFilename" />',
+        	buttons:{
+        		exportButton:{
+        			menuItems: [
+	        			{
+    		                text: 'Download PNG Image',
+            		        onclick: function() {
+                	    	    this.exportChart();
+	        	            }
+    		            },
+		                null,
+    		            {
+    		                text: 'Download PDF File',
+            		        onclick: function() {
+                	    	    this.exportChart({
+							        type: 'application/pdf'
+							    });
+	        	            }
+    		            },
+    		            {
+    		                text: 'Download SVG File',
+            		        onclick: function() {
+                	    	    this.exportChart({
+							        type: 'image/svg+xml'
+							    });
+	        	            }
+    		            }
+                	]
+        		}
+        	}
+        	
+    	}
+    		
+    	
+	});//end chart
+});//end dom load
+
+  
+         
+</script>
+
+<wo:WOGenericContainer elementName = "div" id="$chartContainerID" style="height:400px;"></wo:WOGenericContainer>
+
+</wo:LAF>

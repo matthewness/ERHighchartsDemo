@@ -1,0 +1,57 @@
+.note{
+margin: 0 auto;
+	width: 90%;
+	padding: 10px 20px; 
+	text-align: left;
+	color: #333;
+	-webkit-border-radius: 10px ;
+	-moz-border-radius: 10px ;
+	border-radius: 10px ;
+	font-size:13px;
+	font-weight:300;
+	filter: alpha(opacity=80);
+	-moz-opacity: 0.8;
+	opacity: 0.8;
+	line-height: 1.4;
+	background: #eee;
+}
+	
+form{
+	margin: 0 auto;
+	padding: 5px; 
+	text-align: left;
+	color: #333;
+	font-size:13px;
+	font-weight:300;
+	line-height: 1.4;		
+}
+
+hr{
+	width: 80%;
+	color: #ccc;
+	margin: 10px auto;
+}
+
+.byoLeft{
+	float:left;
+	margin-left:40px;
+}
+
+
+.byoRight{
+	margin-right:40px;
+	float:right;
+}
+
+#homeLink{
+	padding: 5px; 
+	text-align: left;
+	color: #333;
+	font-size:13px;
+	line-height: 1.4;	
+}
+
+pre{ 
+	display: inline;
+	font-weight: 900;
+}

@@ -1,0 +1,61 @@
+<wo:LAF>
+<div class="note">
+	<h3> Line Chart </h3>
+
+	Line Chart generated from the Model (er.highcharts.demo.model) Company Departments.
+	<div>
+		Line charts use values in the <pre>series.data</pre> , so this chart maps the <pre>data</pre> option in the series
+		to the <pre>monthlyResults</pre> key path.
+	</div>
+	<div>
+		Check and un-check the categories to redraw the chart with and without that line series.
+	</div>
+	
+</div>
+	<wo:ERLineChart graph="$graph" series="$company.departments" mappings="$mappings" />
+
+
+<hr />
+
+<div class="note">
+	<div>
+		<h3>Alternative bindings</h3>
+		Alternatively, you can specify the <pre>seriesNameKeyPath</pre> and <pre>seriesDataKeyPath</pre> bindings.
+	</div>
+	<div>
+		Here the value "name" is bound to the <pre>seriesNameKeyPath</pre> binding, so each line will be defined by each name value of each department.
+	</div>
+	<div>
+		Likewise the value "monthlyResults" is bound to the <pre>seriesDataKeyPath</pre> binding, so each line will have those numbers as its values.
+	</div>
+	<div>
+		Different approach, same result.
+	</div>
+	
+</div>
+	<wo:ERLineChart graph="$graph" series="$company.departments" seriesNameKeyPath="name" seriesDataKeyPath="monthlyResults" />
+
+
+<hr />
+
+<div class="note">
+	<h3>Build your own line</h3>
+	Build your own line chart by entering the details in the form and hitting build. 
+	<div>
+	The field is the line y-value value as a number. The x axis is the date time you entered the number.
+	</div>
+</div>
+<wo:form multipleSubmit = "$true">
+		<div class="byoLeft">
+			<div>
+				<wo:textfield numberformat = "######.##" value = "$byoValue" />
+				<wo:submit action="$addEntryAction" value="add"/>
+			</div>			
+		</div>
+		<div class="byoRight">
+			<wo:ERLineChart graph="$byoGraph" series="$byoSeries" style="height:200px;"/>
+		</div>
+</wo:form>
+
+
+</wo:LAF>
