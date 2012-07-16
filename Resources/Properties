@@ -74,4 +74,4 @@ log4j.logger.er.highcharts.demo.components.ERHighchartsDemoComponent=DEBUG
 
 
 # Override the default handler key ('transcode') for the transcoding requests
-er.highcharts.transcode.requestHandlerKey=helios
+er.highcharts.transcode.requestHandlerKey=dellingr
